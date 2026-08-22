@@ -1,0 +1,4 @@
+call_exposure_band,accounts,recovered_accounts,unrecovered_accounts,recovery_rate_pct,recovery_amount,avg_dpd,avg_calls,avg_attempts
+0-2 calls,12637,5547.0,7090.0,43.89,788946795.97,56.27,1.4,3.98
+3-4 calls,11815,5242.0,6573.0,44.37,742210152.44,57.1,3.43,4.02
+5+ calls,5548,2495.0,3053.0,44.97,347735324.48,55.78,5.74,3.99

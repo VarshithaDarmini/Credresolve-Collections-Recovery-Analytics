@@ -1,0 +1,3 @@
+check_name,raw_payment_rows,unique_payment_ids,duplicate_payment_ids,conflicting_status_ids,conflicting_amount_ids,conflicting_timestamp_ids,duplicate_inflation_amount,finding
+PAYMENT_DUPLICATES,25500,25000,500,0,0,0,38367000.0,"500 payment IDs are duplicated; duplicate rows have consistent status, amount, and timestamp. One record per payment_id is retained in account_recovery."
+GOLDEN_DATASET_INTEGRITY,30000,30000,0,0,0,0,0.0,"30,000 account-level records with 30,000 unique account IDs and no NULL account IDs."

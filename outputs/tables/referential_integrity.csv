@@ -1,0 +1,16 @@
+child_table,child_key,parent_table,parent_key,status,child_rows,non_null_child_keys,orphan_rows,orphan_pct
+accounts,borrower_id,borrowers,borrower_id,TESTED,30000,29545,2458,8.32
+calls,account_id,accounts,account_id,TESTED,91350,91350,0,0.0
+call_attempts,call_id,calls,call_id,TESTED,120000,120000,0,0.0
+call_dispositions,call_id,calls,call_id,TESTED,35000,35000,0,0.0
+payments,account_id,accounts,account_id,TESTED,25500,25500,0,0.0
+promises_to_pay,account_id,accounts,account_id,TESTED,18000,18000,0,0.0
+field_visits,account_id,accounts,account_id,TESTED,25000,25000,0,0.0
+complaints,account_id,accounts,account_id,TESTED,8000,8000,0,0.0
+whatsapp_events,account_id,accounts,account_id,TESTED,60600,60600,0,0.0
+sms_events,account_id,accounts,account_id,TESTED,45000,45000,0,0.0
+daily_targeting,account_id,accounts,account_id,TESTED,45000,45000,0,0.0
+daily_targeting,campaign_id,campaigns,campaign_id,TESTED,45000,45000,0,0.0
+calls,agent_id,agents,agent_id,TESTED,91350,89523,0,0.0
+agent_sessions,agent_id,agents,agent_id,TESTED,15000,15000,0,0.0
+calls,campaign_id,campaigns,campaign_id,TESTED,91350,91350,0,0.0

@@ -1,0 +1,147 @@
+dataset,column,dtype,sample_non_null_value
+account_status_history,history_id,object,HISTORY0000001
+account_status_history,account_id,object,ACC0004322
+account_status_history,borrower_id,object,BRW0005490
+account_status_history,event_at,object,2026-07-03 04:28:38
+account_status_history,status,object,WRITEOFF
+account_status_history,changed_by,object,AGT0000039
+account_status_history,source,object,CALL
+account_status_history,recorded_at,object,2026-07-03 00:41:54
+accounts,account_id,object,ACC0000001
+accounts,borrower_id,object,BRW0010742
+accounts,loan_type,object,CONSUMER
+accounts,principal_amount,float64,603443.4
+accounts,outstanding_amount,float64,678074.03
+accounts,dpd,int64,15
+accounts,risk_segment,object,MEDIUM
+accounts,status,object,CLOSED
+accounts,opened_at,object,2025-11-11 04:37:00
+accounts,timezone,object,Asia/Dubai
+accounts,schema_version,object,v1
+agent_sessions,session_id,object,SES0000001
+agent_sessions,agent_id,object,AGT0000117
+agent_sessions,login_at,object,2026-08-06 13:33:27
+agent_sessions,channel,object,VOICE
+agent_sessions,device_id,object,DEV00243
+agent_sessions,timezone,object,Asia/Kolkata
+agent_sessions,logout_at,object,2026-08-06 18:41:13
+agents,agent_id,object,AGT0000760
+agents,employee_code,object,EMP00323
+agents,agent_name,object,Vikram Shah
+agents,vendor_id,object,VND0000012
+agents,team,object,T3
+agents,status,object,INACTIVE
+agents,joined_at,object,2025-06-19 20:30:53
+agents,updated_at,object,2025-12-11 03:40:22
+borrowers,borrower_id,object,BRW0001072
+borrowers,name,object,Rahul Verma
+borrowers,phone,float64,9037419103.0
+borrowers,email,object,user9183@example.com
+borrowers,city,object,Bhubaneswar
+borrowers,created_at,object,2025-09-25 08:02:29
+borrowers,updated_at,object,2026-07-25 22:25:48
+borrowers,state,object,Odisha
+call_attempts,attempt_id,object,ATTEMPT0000001
+call_attempts,account_id,object,ACC0009527
+call_attempts,borrower_id,object,BRW0000705
+call_attempts,event_at,object,2026-03-10 21:31:13
+call_attempts,call_id,object,CALL0019052
+call_attempts,agent_id,object,AGT0000685
+call_attempts,attempt_no,int64,5
+call_attempts,vendor_id,object,VND0000013
+call_attempts,attempt_status,object,FAILED
+call_dispositions,disposition_id,object,DISPOSITION0000001
+call_dispositions,account_id,object,ACC0029208
+call_dispositions,borrower_id,object,BRW0006282
+call_dispositions,event_at,object,2026-03-07 17:30:48
+call_dispositions,call_id,object,CALL0032272
+call_dispositions,agent_id,object,AGT0000759
+call_dispositions,disposition_code,object,CALLBACK
+call_dispositions,disposition_version,object,v2
+calls,call_id,object,CALL0000001
+calls,account_id,object,ACC0011505
+calls,borrower_id,object,BRW0007139
+calls,event_at,object,2026-07-15 15:36:22
+calls,agent_id,object,AGT0000955
+calls,campaign_id,object,CMP0000015
+calls,direction,object,OUTBOUND
+calls,vendor_id,object,VND0000013
+calls,call_status,object,NO_ANSWER
+calls,duration_sec,int64,601
+calls,timezone,object,Asia/Dubai
+campaigns,campaign_id,object,CMP0000001
+campaigns,campaign_name,object,DIGITAL_FOLLOWUP
+campaigns,channel,object,FIELD
+campaigns,strategy_version,object,legacy
+campaigns,start_at,object,2026-02-17 06:56:01
+campaigns,target_definition,object,DPD>=30
+campaigns,end_at,object,2026-04-24 06:56:01
+complaints,complaint_id,object,COMPLAINT0000001
+complaints,account_id,object,ACC0015256
+complaints,borrower_id,object,BRW0010194
+complaints,event_at,object,2026-04-29 16:34:08
+complaints,complaint_type,object,DISPUTE
+complaints,severity,object,HIGH
+complaints,status,object,CLOSED
+complaints,source,object,FIELD
+complaints,resolution_at,object,2026-05-12 16:34:08
+daily_targeting,target_id,object,TGT0000001
+daily_targeting,account_id,object,ACC0028555
+daily_targeting,campaign_id,object,CMP0000103
+daily_targeting,target_date,object,2026-04-22
+daily_targeting,priority,int64,4
+daily_targeting,recommended_channel,object,FIELD
+daily_targeting,status,object,QUEUED
+data_dictionary,dataset,object,borrowers
+data_dictionary,column,object,borrower_id
+data_dictionary,dtype,object,object
+field_visits,visit_id,object,VISIT0000001
+field_visits,account_id,object,ACC0026237
+field_visits,borrower_id,object,BRW0009469
+field_visits,event_at,object,2026-01-25 01:15:48
+field_visits,agent_id,object,AGT0000403
+field_visits,visit_type,object,AFTER_HOURS
+field_visits,outcome,object,PAID
+field_visits,latitude,float64,31.861705912118765
+field_visits,longitude,float64,76.09818443918937
+field_visits,scheduled_at,object,2026-01-24 05:49:28
+payments,payment_id,object,PAYMENT0000001
+payments,account_id,object,ACC0015539
+payments,borrower_id,object,BRW0011363
+payments,event_at,object,2026-02-27 01:28:12
+payments,payment_reference,object,TXN0000007457
+payments,amount,float64,22433.23
+payments,payment_status,object,FAILED
+payments,payment_method,object,CARD
+payments,provider_id,object,VND0000001
+promises_to_pay,ptp_id,object,PTP0000001
+promises_to_pay,account_id,object,ACC0021078
+promises_to_pay,borrower_id,object,BRW0003789
+promises_to_pay,event_at,object,2026-04-18 21:11:02
+promises_to_pay,agent_id,object,AGT0000787
+promises_to_pay,promised_amount,float64,93575.19
+promises_to_pay,promised_date,object,2026-05-17 21:11:02
+promises_to_pay,status,object,CANCELLED
+promises_to_pay,source,object,FIELD
+sms_events,sms_event_id,object,SMS_EVENT0000001
+sms_events,account_id,object,ACC0010751
+sms_events,borrower_id,object,BRW0009574
+sms_events,event_at,object,2026-04-24 20:57:06
+sms_events,message_id,object,SMS000022764
+sms_events,event_type,object,CLICKED
+sms_events,template_code,object,PAYMENT_LINK
+sms_events,provider_id,object,VND0000010
+vendor_telephony,vendor_id,object,VND0000001
+vendor_telephony,vendor_name,object,Airtel
+vendor_telephony,vendor_account_id,object,VAC342762
+vendor_telephony,timezone,object,Asia/Kolkata
+vendor_telephony,status,object,INACTIVE
+vendor_telephony,schema_version,object,v3
+whatsapp_events,whatsapp_event_id,object,WHATSAPP_EVENT0000001
+whatsapp_events,account_id,object,ACC0006134
+whatsapp_events,borrower_id,object,BRW0007859
+whatsapp_events,event_at,object,2026-02-27 17:49:38
+whatsapp_events,message_id,object,MSG000008171
+whatsapp_events,event_type,object,FAILED
+whatsapp_events,template_code,object,FIELD_VISIT
+whatsapp_events,provider_id,object,VND0000008

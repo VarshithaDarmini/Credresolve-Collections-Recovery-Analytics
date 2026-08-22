@@ -1,0 +1,9 @@
+dataset,flag,flagged_rows
+calls,borrower_account_mismatch_flag,89939
+calls,account_timezone_comparison_flag,60887
+calls,unknown_agent_flag,0
+calls,unknown_campaign_flag,0
+daily_targeting,unknown_campaign_flag,0
+payments,duplicate_payment_id_flag,1000
+payments,duplicate_payment_reference_flag,8042
+payments,borrower_account_mismatch_flag,25113

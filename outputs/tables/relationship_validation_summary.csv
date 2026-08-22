@@ -1,0 +1,2 @@
+relationships_defined,relationships_tested,relationships_with_orphans,total_orphan_rows,identifier_fields_with_duplicates,primary_key_candidates_tested
+15,15,1,2458,46,59

@@ -1,0 +1,4 @@
+scenario,description,eligible_accounts,baseline_eligible_recovery_rate,assumed_absolute_recovery_lift,counterfactual_recovery_rate,estimated_incremental_recovered_accounts,estimated_incremental_recovery_amount,estimated_total_recovery_amount,causal_claim,incremental_recovery_value,incremental_recovered_accounts,incremental_recovery_vs_baseline_pct
+A,1 percentage-point recovery improvement among currently unrecovered accounts,16716,0.0,0.01,0.01,167.16,24125937.25103839,1941384554.4010384,False,24125937.25103839,167.16,1.258355916892502
+B,1 percentage-point recovery improvement among currently unrecovered accounts with <=2 calls,7090,0.0,0.01,0.01,70.9,10232884.368859908,1927491501.51886,False,10232884.368859908,70.9,0.5337247816922613
+C,2 percentage-point recovery improvement among currently unrecovered accounts,16716,0.0,0.02,0.02,334.32,48251874.50207678,1965510491.652077,False,48251874.50207678,334.32,2.516711833785004

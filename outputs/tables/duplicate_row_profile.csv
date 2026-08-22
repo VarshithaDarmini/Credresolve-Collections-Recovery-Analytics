@@ -1,0 +1,5 @@
+dataset,rows,columns,duplicate_rows,missing_cells,missing_pct_all_cells
+calls,91350,11,1271,1827,0.18
+borrowers,30600,8,600,1509,0.62
+whatsapp_events,60600,8,600,0,0.0
+payments,25500,9,486,382,0.17

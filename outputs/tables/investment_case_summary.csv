@@ -1,0 +1,2 @@
+accounts_analyzed,baseline_recovery_rate,baseline_recovery_amount,baseline_outstanding_amount,largest_scenario,largest_scenario_incremental_recovery_value,maximum_break_even_investment,actual_implementation_cost_available,roi_claim_made,causal_claim_made,recommended_action
+30000,0.4428,1917258617.15,10489035343.0,C,48251874.50207678,48251874.50207678,False,False,False,Validate through controlled pilot before scaling

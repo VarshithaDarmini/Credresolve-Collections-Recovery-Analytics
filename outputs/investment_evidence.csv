@@ -1,0 +1,7 @@
+investment_option,direct_dataset_evidence,adjusted_model_available,model_effect_pp,break_even_pp,margin_vs_break_even_pp
+Better telephony infrastructure,Yes,Yes,0.9614887160317387,0.9533765187161501,0.008112197315588543
+More collection agents,Yes,Yes,0.3613962537292348,0.9533765187161501,-0.5919802649869154
+AI voice automation,No,No,,0.9533765187161501,
+Better borrower targeting,Yes,Yes,-0.9471770174966421,0.9533765187161501,-1.9005535362127923
+WhatsApp / digital engagement,No,No,,0.9533765187161501,
+Field operations,No,No,,0.9533765187161501,

@@ -1,0 +1,13 @@
+dataset,column,data_type,missing_count
+accounts,opened_at,object,0
+accounts,timezone,object,0
+agent_sessions,timezone,object,0
+agents,updated_at,object,0
+borrowers,created_at,object,0
+borrowers,updated_at,object,0
+calls,timezone,object,0
+daily_targeting,target_date,object,0
+daily_targeting,recommended_channel,object,0
+field_visits,scheduled_at,object,250
+promises_to_pay,promised_date,object,0
+vendor_telephony,timezone,object,0

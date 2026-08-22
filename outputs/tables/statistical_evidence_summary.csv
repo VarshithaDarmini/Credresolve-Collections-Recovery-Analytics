@@ -1,0 +1,16 @@
+analysis,driver,p_value,significant_5pct,bonferroni_significant
+Chi-square,loan_type,0.39247419808458434,False,False
+Chi-square,risk_segment,0.44393160050274727,False,False
+Chi-square,status,0.7636000700989001,False,False
+Chi-square,dpd_bucket,0.027852408730352538,True,False
+Mann-Whitney U,dpd,0.9970563384557813,False,False
+Mann-Whitney U,principal_amount,0.9293036388348261,False,False
+Mann-Whitney U,outstanding_amount,0.8880204786076427,False,False
+Mann-Whitney U,total_calls,0.10173778004741207,False,False
+Mann-Whitney U,total_call_duration_sec,0.3331379667686257,False,False
+Mann-Whitney U,total_attempts,0.33483204046534687,False,False
+Mann-Whitney U,targeting_events,0.6511041395788029,False,False
+Mann-Whitney U,campaigns_targeted,0.6618745657770195,False,False
+Mann-Whitney U,disposition_events,0.7631441325925784,False,False
+Mann-Whitney U,unique_agents,0.06283736509962887,False,False
+Mann-Whitney U,unique_vendors,0.02655018842271641,True,False

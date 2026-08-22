@@ -1,0 +1,2 @@
+baseline_accounts,baseline_recovered_accounts,baseline_recovery_rate,baseline_recovery_amount,largest_scenario,largest_scenario_incremental_recovery_amount,counterfactual_is_causal_claim
+30000,13284,0.4428,1917258617.15,C,48251874.50207678,False

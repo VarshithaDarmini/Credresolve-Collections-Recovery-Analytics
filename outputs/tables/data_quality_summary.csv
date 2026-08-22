@@ -1,0 +1,2 @@
+datasets_analyzed,datasets_with_missing_values,columns_with_missing_values,datasets_with_duplicate_rows,total_duplicate_rows,identifier_columns_reviewed,candidate_keys_identified,timestamp_columns_reviewed,timestamp_columns_with_invalid_dates,numeric_columns_with_negative_values,low_variation_columns_flagged
+18,6,7,4,5914,64,17,12,5,0,37

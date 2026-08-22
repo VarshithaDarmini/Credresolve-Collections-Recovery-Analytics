@@ -1,0 +1,4 @@
+investment_option,model_effect_pp,break_even_pp,margin_vs_break_even_pp,meets_break_even
+Better telephony infrastructure,0.961489,0.953377,0.008112000000000008,True
+More collection agents,0.361396,0.953377,-0.5919810000000001,False
+Better borrower targeting,-0.947177,0.953377,-1.900554,False

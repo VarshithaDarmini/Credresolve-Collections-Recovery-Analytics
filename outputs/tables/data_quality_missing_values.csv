@@ -1,0 +1,8 @@
+dataset,column,rows,missing_count,missing_pct
+borrowers,email,30600,895,2.92
+borrowers,phone,30600,614,2.01
+call_attempts,vendor_id,120000,2400,2.0
+calls,agent_id,91350,1827,2.0
+accounts,borrower_id,30000,455,1.52
+payments,payment_reference,25500,382,1.5
+field_visits,scheduled_at,25000,250,1.0

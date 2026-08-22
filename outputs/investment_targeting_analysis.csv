@@ -1,0 +1,3 @@
+targeted_account,accounts,recovered_accounts,unrecovered_accounts,recovery_amount,avg_dpd,avg_targeting_events,avg_targeting_campaigns,recovery_rate_pct
+0,6656,2996.0,3660.0,419418486.05,56.29,0.0,0.0,45.01
+1,23344,10288.0,13056.0,1459473786.84,56.57,1.93,1.92,44.07

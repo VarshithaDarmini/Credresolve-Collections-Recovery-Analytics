@@ -1,0 +1,8 @@
+dataset,column,valid_dates,unparsed_values,min_date,max_date
+accounts,opened_at,30000,0,2024-01-01 00:02:27,2025-11-30 23:52:36
+agents,updated_at,30000,0,2025-01-01 00:57:32,2026-08-03 23:45:38
+borrowers,created_at,30600,0,2025-01-01 00:14:38,2026-08-03 23:37:55
+borrowers,updated_at,30600,0,2025-01-01 00:19:40,2026-08-03 23:48:36
+daily_targeting,target_date,45000,0,2026-01-01 00:00:00,2026-08-08 00:00:00
+field_visits,scheduled_at,24750,0,2025-12-31 05:21:55,2026-08-08 21:50:07
+promises_to_pay,promised_date,18000,0,2026-01-02 04:36:18,2026-09-06 21:23:52

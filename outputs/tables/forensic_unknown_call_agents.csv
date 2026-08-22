@@ -1,0 +1,1 @@
+call_id,account_id,borrower_id,event_at,agent_id,campaign_id,direction,vendor_id,call_status,duration_sec,timezone,event_at_parsed

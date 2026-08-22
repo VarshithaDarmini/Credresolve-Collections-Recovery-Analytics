@@ -1,0 +1,8 @@
+dataset,column,data_type,row_count,missing_count,missing_pct,unique_values
+borrowers,email,object,30600,895,2.92,15377
+borrowers,phone,float64,30600,614,2.01,29395
+call_attempts,vendor_id,object,120000,2400,2.0,15
+calls,agent_id,object,91350,1827,2.0,1000
+accounts,borrower_id,object,30000,455,1.52,10943
+payments,payment_reference,object,25500,382,1.5,20821
+field_visits,scheduled_at,object,25000,250,1.0,24730

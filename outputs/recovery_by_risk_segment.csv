@@ -1,0 +1,5 @@
+risk_segment,accounts,recovered_accounts,recovery_rate_pct,recovery_amount,avg_dpd,avg_outstanding_amount
+LOW,7513,3381,45.0,476889341.77,57.97,350500.61
+MEDIUM,7533,3335,44.27,467477182.79,54.76,348888.82
+NPA,7402,3268,44.15,463369560.01,56.85,348738.48
+HIGH,7552,3300,43.7,471156188.32,56.45,350394.94
