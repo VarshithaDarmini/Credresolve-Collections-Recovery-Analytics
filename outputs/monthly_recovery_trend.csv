@@ -1,0 +1,9 @@
+recovery_month,accounts_with_payment_activity,recovered_accounts,recovery_amount,total_portfolio_accounts,worked_account_recovery_rate_pct,portfolio_recovery_rate_pct,recovered_accounts_mom_pct,recovery_amount_mom_pct,worked_account_recovery_rate_change_pp,portfolio_recovery_rate_change_pp,month_status
+2026-01-01 00:00:00,3337,2374,187229127.59,30000,71.14,7.91,,,,,FULL_MONTH
+2026-02-01 00:00:00,3010,2173,170142453.76,30000,72.19,7.24,-8.47,-9.13,1.05,-0.67,FULL_MONTH
+2026-03-01 00:00:00,3358,2419,188912374.02,30000,72.04,8.06,11.32,11.03,-0.15,0.82,FULL_MONTH
+2026-04-01 00:00:00,3267,2304,175138043.41,30000,70.52,7.68,-4.75,-7.29,-1.52,-0.38,FULL_MONTH
+2026-05-01 00:00:00,3296,2344,184250278.5,30000,71.12,7.81,1.74,5.2,0.6,0.13,FULL_MONTH
+2026-06-01 00:00:00,3178,2286,175559726.97,30000,71.93,7.62,-2.47,-4.72,0.81,-0.19,FULL_MONTH
+2026-07-01 00:00:00,3298,2335,187242265.08,30000,70.8,7.78,2.14,6.65,-1.13,0.16,FULL_MONTH
+2026-08-01 00:00:00,898,608,47109695.31,30000,67.71,2.03,-73.96,-74.84,-3.09,-5.75,PARTIAL_MONTH

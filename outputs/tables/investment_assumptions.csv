@@ -1,5 +1,9 @@
 assumption,value,interpretation
-Incremental recovery,Stage 7 counterfactual scenarios,"Scenario estimate, not guaranteed outcome"
-Implementation cost,Not provided,No actual cost invented
-ROI,Sensitivity analysis,Depends on actual implementation cost
+Investment amount,₹10 Cr assignment scenario,Scenario input; not an observed source-data cost
+Incremental recovery,Stage 7 counterfactual/model estimate,"Modeled estimate, not guaranteed outcome"
+Downside scenario,50% of modeled telephony effect,"Sensitivity assumption, not observed performance"
+Base scenario,100% of modeled telephony effect,Sensitivity assumption based on current model
+Upside scenario,125% of modeled telephony effect,"Sensitivity assumption, not observed performance"
+Implementation cost,Not supplied in source data,No operational cost has been invented
+ROI,Scenario sensitivity only,Not realized ROI
 Causal effect,Not established,Requires controlled validation

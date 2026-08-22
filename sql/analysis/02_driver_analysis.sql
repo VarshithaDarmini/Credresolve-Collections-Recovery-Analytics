@@ -6,15 +6,19 @@
 -- Analyze descriptive associations between recovery outcomes
 -- and collection-exposure variables.
 --
--- Important:
--- These analyses identify associations, NOT causal effects.
+-- IMPORTANT:
+-- These results describe observed associations only.
+-- They do NOT establish causal effects.
 --
 -- Business definition:
 -- recovered_account = account with at least one SUCCESS payment.
 --
 -- Recovery amount:
--- total_payment_amount from account_features, which is based on
--- deduplicated payment records.
+-- total_payment_amount from account_features.
+--
+-- Small groups:
+-- Groups with fewer than 100 accounts are flagged as
+-- LOW_SAMPLE and should not be used for strong conclusions.
 --
 -- Raw source data is NOT modified.
 -- ============================================================
@@ -93,7 +97,13 @@ SELECT
     ROUND(
         AVG(outstanding_amount),
         2
-    ) AS avg_outstanding_amount
+    ) AS avg_outstanding_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM call_groups
 
@@ -109,20 +119,35 @@ ORDER BY
 -- 2. RECOVERY BY ATTEMPT EXPOSURE
 -- ============================================================
 
+WITH attempt_groups AS (
+
+    SELECT
+
+        CASE
+            WHEN total_attempts = 0
+                THEN '0 attempts'
+
+            WHEN total_attempts <= 2
+                THEN '1-2 attempts'
+
+            WHEN total_attempts <= 5
+                THEN '3-5 attempts'
+
+            ELSE '6+ attempts'
+        END AS attempt_exposure_band,
+
+        recovered_account,
+        total_payment_amount,
+        dpd,
+        outstanding_amount,
+        total_attempts
+
+    FROM account_features
+)
+
 SELECT
 
-    CASE
-        WHEN total_attempts = 0
-            THEN '0 attempts'
-
-        WHEN total_attempts <= 2
-            THEN '1-2 attempts'
-
-        WHEN total_attempts <= 5
-            THEN '3-5 attempts'
-
-        ELSE '6+ attempts'
-    END AS attempt_exposure_band,
+    attempt_exposure_band,
 
     COUNT(*) AS accounts,
 
@@ -151,24 +176,18 @@ SELECT
     ROUND(
         AVG(outstanding_amount),
         2
-    ) AS avg_outstanding_amount
-
-FROM account_features
-
-GROUP BY
+    ) AS avg_outstanding_amount,
 
     CASE
-        WHEN total_attempts = 0
-            THEN '0 attempts'
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
-        WHEN total_attempts <= 2
-            THEN '1-2 attempts'
+FROM attempt_groups
 
-        WHEN total_attempts <= 5
-            THEN '3-5 attempts'
-
-        ELSE '6+ attempts'
-    END
+GROUP BY
+    attempt_exposure_band
 
 ORDER BY
     MIN(total_attempts);
@@ -209,7 +228,13 @@ SELECT
     ROUND(
         AVG(outstanding_amount),
         2
-    ) AS avg_outstanding_amount
+    ) AS avg_outstanding_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM account_features
 
@@ -253,7 +278,13 @@ SELECT
     ROUND(
         AVG(outstanding_amount),
         2
-    ) AS avg_outstanding_amount
+    ) AS avg_outstanding_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM account_features
 
@@ -297,7 +328,13 @@ SELECT
     ROUND(
         AVG(outstanding_amount),
         2
-    ) AS avg_outstanding_amount
+    ) AS avg_outstanding_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM account_features
 
@@ -341,7 +378,13 @@ SELECT
     ROUND(
         SUM(total_payment_amount),
         2
-    ) AS recovery_amount
+    ) AS recovery_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM account_features
 
@@ -385,7 +428,13 @@ SELECT
     ROUND(
         SUM(total_payment_amount),
         2
-    ) AS recovery_amount
+    ) AS recovery_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM account_features
 
@@ -467,7 +516,13 @@ SELECT
     ROUND(
         AVG(outstanding_amount),
         2
-    ) AS avg_outstanding_amount
+    ) AS avg_outstanding_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM dpd_groups
 
@@ -504,7 +559,13 @@ SELECT
     ROUND(
         SUM(total_payment_amount),
         2
-    ) AS recovery_amount
+    ) AS recovery_amount,
+
+    CASE
+        WHEN COUNT(*) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
 
 FROM account_features
 

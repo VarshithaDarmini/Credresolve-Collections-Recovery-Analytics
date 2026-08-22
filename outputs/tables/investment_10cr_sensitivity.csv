@@ -1,0 +1,4 @@
+scenario,investment_amount,assumed_uplift_pp,incremental_recovery,net_value_after_investment,roi_pct,meets_break_even,scenario_type
+Downside,100000000,0.0,0.0,-100000000.0,-100.0,False,ASSUMPTION / SENSITIVITY — NOT OBSERVED FACT
+Base,100000000,0.0,0.0,-100000000.0,-100.0,False,ASSUMPTION / SENSITIVITY — NOT OBSERVED FACT
+Upside,100000000,0.0,0.0,-100000000.0,-100.0,False,ASSUMPTION / SENSITIVITY — NOT OBSERVED FACT
