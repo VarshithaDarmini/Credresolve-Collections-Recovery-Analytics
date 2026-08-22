@@ -31,7 +31,9 @@ The final analytical grain is **one record per account**.
 | SUCCESS-only recovery | Applied | Pass |
 | Partial August data | August ends Aug 8 | Excluded from full-month trend conclusion |
 | Cost per ₹ recovered | Cost field unavailable | Not estimable |
-| Missing business dimensions | Client, geography, language, agent tenure | Not fabricated |
+| **Borrower identity conflicts** | **73.3% of borrower_ids have conflicting city/state across rows** | **Unresolved — geography excluded** |
+| **Agent identity conflicts** | **100% of agent_ids map to multiple identities/join dates** | **Unresolved — agent tenure excluded** |
+| Client, Language dimensions | Not present in any source table | Not fabricated |
 
 ---
 
@@ -194,24 +196,64 @@ This prevents an incomplete August from being incorrectly compared with full cal
 
 ---
 
-## 7. Data Availability Limitations
+## 7. Entity Identity Problems: Geography and Agent Tenure
 
-The assignment requests analysis across several dimensions.
+The assignment requests analysis by geography, language, agent tenure, and client. This section documents why two of these four dimensions are technically present in the schema but were excluded from driver analysis, and quantifies the underlying identity problem — directly addressing Part 2E of the assignment ("Agent identity problems: does the same agent appear under multiple identifiers?").
 
-The following dimensions are not available as reliable standalone analytical fields in the supplied data:
+### 7.1 Client and Language — genuinely absent
 
-- Client
-- Geography
-- Language
-- Agent tenure
+Neither `client` nor `language` exists as a field in any raw or golden source table. These dimensions are not fabricated or inferred.
 
-These dimensions are **not fabricated or inferred**.
+### 7.2 Geography — present but unreliable due to unresolved borrower identity
 
-### Business Impact
+`borrowers.city` and `borrowers.state` exist in the schema. However, `borrower_id` does not behave as a stable entity key in the supplied data:
 
-The project reports only dimensions that can be supported by the available data.
+| Check | Result |
+|---|---:|
+| Unique `borrower_id` values | 11,015 |
+| `borrower_id` values appearing on more than one row | 8,566 (77.8%) |
+| `borrower_id` values with **conflicting `state`** across rows | 8,070 (73.3%) |
+| `borrower_id` values with conflicting `name` across rows | 8,185 (74.3%) |
 
-Additional source fields would be required for reliable production analysis of these dimensions.
+**Example:** `BRW0000001` appears on 3 rows as "Aarav Sharma" (Kolkata → Hyderabad) and "Rohan Patel" (Hyderabad), with no consistent `updated_at` ordering that resolves which record is authoritative (`created_at` is not monotonic with `updated_at` across the duplicate rows).
+
+#### Detection Method
+Grouped `borrowers_golden` by `borrower_id` and counted distinct `state` and `name` values per group.
+
+#### Treatment
+Geography is excluded from driver analysis rather than assigning an arbitrary row (e.g. "first" or "last") to each account, which would silently misattribute state to the wrong physical location for roughly three out of four borrowers.
+
+#### Business Impact
+A geography cut is not reliable until borrower identity is resolved (e.g. via phone/email matching, a canonical source-of-truth table, or an upstream fix to the ingestion process producing duplicate `borrower_id` rows with conflicting attributes). Any geography-based recovery comparison built on the current table would reflect data-entry noise, not a real geographic effect.
+
+### 7.3 Agent Tenure — present but unreliable due to unresolved agent identity
+
+`agents.joined_at` exists and is the natural source for tenure. However, `agent_id` is even less reliable than `borrower_id`:
+
+| Check | Result |
+|---|---:|
+| Unique `agent_id` values | 1,000 |
+| Raw `agents_golden` rows | 30,000 (30 rows per agent_id on average) |
+| `agent_id` values with **conflicting `joined_at`** | 1,000 (100%) |
+
+Every single `agent_id` maps to roughly 20–30 distinct name/team/`joined_at` combinations. Example: `AGT0000001` alone maps to 23 different names and join dates spanning January 2024 to September 2025.
+
+#### Detection Method
+Grouped `agents_golden` by `agent_id` and counted distinct `joined_at`, `agent_name`, and `team` values per group.
+
+#### Treatment
+Agent tenure is excluded from driver analysis. No single-row selection rule (latest `updated_at`, first `created_at`, most frequent value) can be justified without confirming which underlying identity the `agent_id` is actually meant to represent — this looks less like ordinary duplication and more like an unresolved multi-entity mapping problem upstream of this dataset.
+
+#### Business Impact
+Reporting a tenure effect on top of an unresolved 100%-conflict identifier would produce a number that cannot be trusted or reproduced. This is flagged as a candidate root-cause investigation for the source system rather than something correctable in this analysis.
+
+### 7.4 Recommendation
+
+Before geography or agent tenure can be added to production driver analysis:
+
+1. Establish a canonical identity-resolution rule for `borrower_id` and `agent_id` (e.g., a verified source-of-truth table, majority-vote on stable fields, or a fix at ingestion).
+2. Re-run the conflict checks above against the resolved table and confirm conflict rates drop to near zero.
+3. Only then re-introduce geography and agent tenure as driver-analysis cuts.
 
 ---
 
@@ -249,7 +291,7 @@ The following principles are applied throughout the project:
 - Recovery is based on SUCCESS payments only.
 - Account-level grain is explicitly validated.
 - Partial months are identified before trend conclusions.
-- Missing business dimensions are not fabricated.
+- Missing or unresolved-identity business dimensions are not fabricated or arbitrarily assigned.
 - Unsupported financial metrics are reported as not estimable.
 - Observational relationships are not presented as causal effects.
 
@@ -267,6 +309,8 @@ After applying the documented validation and treatment rules:
 | Recovery rate | 44.28% |
 | Verified SUCCESS recovery | ₹1,315,583,964.64 |
 | Recovery in Crores | ~₹131.56 Cr |
+| Borrower identity conflict rate | 73.3% of borrower_ids |
+| Agent identity conflict rate | 100% of agent_ids |
 
 The final analytical dataset contains:
 
@@ -275,7 +319,7 @@ The final analytical dataset contains:
 - **0 NULL account IDs**
 - **0 duplicate account IDs**
 
-The payment layer contains 500 duplicate payment IDs, but these are handled before account-level recovery aggregation.
+The payment layer contains 500 duplicate payment IDs, but these are handled before account-level recovery aggregation. The borrower and agent identity layers contain far more severe, currently unresolved conflicts (73.3% and 100% respectively), which is why geography and agent tenure are excluded from driver analysis rather than silently computed on an unreliable key.
 
 ---
 
@@ -313,9 +357,17 @@ The payment layer contains 500 duplicate payment IDs, but these are handled befo
 
 **PASS — August treated as partial**
 
-### MISSING BUSINESS DIMENSIONS
+### BORROWER IDENTITY (borrower_id → city/state)
 
-**DOCUMENTED — not fabricated**
+**FAIL — 73.3% conflict rate; geography excluded pending entity resolution**
+
+### AGENT IDENTITY (agent_id → joined_at)
+
+**FAIL — 100% conflict rate; agent tenure excluded pending entity resolution**
+
+### CLIENT / LANGUAGE DIMENSIONS
+
+**NOT PRESENT IN SCHEMA — not fabricated**
 
 ### COST PER ₹ RECOVERED
 
@@ -325,16 +377,16 @@ The payment layer contains 500 duplicate payment IDs, but these are handled befo
 
 ## 12. Conclusion
 
-The primary material data-quality issue identified is the presence of **500 duplicate payment IDs** within **25,500 raw payment rows**.
+Two material data-quality issues were identified.
 
-The duplicates were investigated and showed no conflicting payment status, amount, or timestamp values. They are therefore treated as duplicate/re-ingested records and deduplicated before account-level recovery aggregation.
+The first is the presence of **500 duplicate payment IDs** within **25,500 raw payment rows**. These were investigated and showed no conflicting payment status, amount, or timestamp values, and were deduplicated before account-level recovery aggregation.
 
-The final analytical dataset passes the account-level integrity checks and contains **30,000 unique accounts**.
+The second, more severe issue is an **unresolved entity-identity problem in the borrower and agent tables**: 73.3% of `borrower_id` values carry conflicting city/state data across rows, and 100% of `agent_id` values map to multiple, materially different name/team/join-date combinations. Rather than assign an arbitrary row to each ID — which would silently fabricate a geography or tenure value — these dimensions are excluded from driver analysis until the source identity keys are resolved upstream.
+
+The final analytical dataset passes all account-level integrity checks and contains **30,000 unique accounts**.
 
 The resulting verified SUCCESS-based recovery is:
 
 **₹1,315,583,964.64 (~₹131.56 Cr)**
 
-The data-quality treatment provides a reliable foundation for the downstream recovery, driver, statistical, counterfactual, and investment analyses.
-
-Where the supplied data cannot support a requested metric or business dimension, the project explicitly records the limitation rather than introducing unsupported values.
+The data-quality treatment provides a reliable foundation for the downstream recovery, driver, statistical, counterfactual, and investment analyses. Where the supplied data cannot support a requested metric or business dimension — either because the field is absent or because its identity key is unresolved — the project explicitly records the limitation and quantifies it, rather than introducing unsupported values.
