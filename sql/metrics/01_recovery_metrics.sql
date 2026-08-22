@@ -12,8 +12,10 @@
 --     Account has at least one SUCCESS payment.
 --
 -- recovery_amount:
---     Sum of payment amounts retained in clean_payments
---     and attributed to the analyzed account.
+--     Sum of valid SUCCESS payment amounts only.
+--
+-- IMPORTANT:
+--     FAILED, PENDING, and REVERSED payments are NOT recovery.
 --
 -- Raw source data is NOT modified.
 -- ============================================================
@@ -232,9 +234,6 @@ ORDER BY call_exposed;
 --     3 calls
 --     4 calls
 --     5+ calls
---
--- A separate bucket_order field is used so DuckDB can sort
--- the grouped result correctly.
 -- ============================================================
 
 WITH bucketed_accounts AS (
@@ -426,7 +425,7 @@ SELECT
 
     'SUM(total_payment_amount)',
 
-    'Sum of payment amounts retained in clean_payments and attributed to analyzed accounts'
+    'Sum of valid SUCCESS payment amounts only'
 
 UNION ALL
 
@@ -436,4 +435,4 @@ SELECT
 
     'recovery_amount / recovered_accounts',
 
-    'Average payment amount per account classified as recovered';
+    'Average SUCCESS payment amount per account classified as recovered';

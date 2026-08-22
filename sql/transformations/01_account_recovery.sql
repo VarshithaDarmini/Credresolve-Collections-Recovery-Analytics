@@ -14,8 +14,8 @@
 --   recovered_account = account has at least one SUCCESS payment
 --
 -- Recovery amount:
---   sum of valid payment amounts after duplicate payment-ID
---   records have been removed.
+--   sum of valid SUCCESS payment amounts after duplicate
+--   payment-ID records have been removed.
 -- ============================================================
 
 
@@ -57,7 +57,14 @@ payment_metrics AS (
 
         COUNT(payment_id) AS payment_count,
 
-        SUM(amount) AS total_payment_amount,
+        -- Recovery amount includes SUCCESS payments only.
+        SUM(
+            CASE
+                WHEN payment_status = 'SUCCESS'
+                THEN amount
+                ELSE 0
+            END
+        ) AS total_payment_amount,
 
         SUM(
             CASE

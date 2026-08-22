@@ -12,8 +12,10 @@
 --     Account has at least one SUCCESS payment.
 --
 -- recovery_amount:
---     Sum of payment amounts retained in clean_payments
---     and attributed to the analyzed account.
+--     Sum of valid SUCCESS payment amounts only,
+--     after duplicate payment records have been removed.
+--
+--     FAILED, PENDING, and REVERSED payments are excluded.
 --
 -- Raw source data is NOT modified.
 -- ============================================================
