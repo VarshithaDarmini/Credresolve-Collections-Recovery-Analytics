@@ -1,2 +1,2 @@
-investment_amount,portfolio_outstanding,break_even_uplift_pp,telephony_modeled_effect_pp,telephony_margin_vs_break_even_pp,investment_cost_source,incremental_effect_source,causal_effect_established
-100000000,10489035343.0,0.9533765187161501,0.0,-0.9533765187161501,Assignment scenario — not supplied as observed source data,Stage 7 counterfactual/model estimate,False
+investment_amount,portfolio_outstanding,break_even_uplift_pp,telephony_modeled_effect_pp,telephony_margin_vs_break_even_pp,telephony_incremental_recovery_value,telephony_incremental_recovered_accounts,investment_cost_source,incremental_effect_source,causal_effect_established
+100000000,10489035343.0,0.9533765187161501,1.0762490116256629,0.12287249290951274,112888139.20810395,322.87470348769887,₹10 Cr assignment scenario — not observed source data,Stage 7 counterfactual/model estimate,False

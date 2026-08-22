@@ -2,824 +2,854 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CredResolve Collections Recovery Analytics</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CredResolve Recovery</title>
 
 <style>
+*{box-sizing:border-box}
 
-* {
-    box-sizing: border-box;
+body{
+    margin:0;
+    background:#f5f7fa;
+    color:#17202a;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #1f2937;
+.container{
+    max-width:1180px;
+    margin:auto;
+    padding:28px;
 }
 
-header {
-    background: #111827;
-    color: white;
-    padding: 30px 45px;
+h1{
+    margin:0;
+    font-size:25px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 30px;
+.subtitle{
+    margin-top:5px;
+    color:#6b7280;
+    font-size:11px;
 }
 
-header p {
-    margin: 8px 0 0;
-    color: #d1d5db;
+.card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:18px;
+    margin-top:12px;
 }
 
-.container {
-    max-width: 1400px;
-    margin: auto;
-    padding: 30px;
+.kpis{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
 }
 
-h2 {
-    margin-top: 35px;
+.kpi-label{
+    color:#6b7280;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.07em;
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+.kpi-value{
+    font-size:25px;
+    font-weight:700;
+    margin-top:8px;
 }
 
-.card {
-    background: white;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+.kpi-note{
+    color:#6b7280;
+    font-size:9px;
+    margin-top:5px;
 }
 
-.label {
-    color: #6b7280;
-    font-size: 14px;
+.title{
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:12px;
 }
 
-.value {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 8px;
+.verdict{
+    background:#fff8e7;
+    border-left:4px solid #c58a00;
+    border-radius:7px;
+    padding:15px;
+    font-size:12px;
+    line-height:1.6;
 }
 
-.charts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 20px;
+.verdict strong{
+    font-size:16px;
 }
 
-.chart-box {
-    background: white;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+.small-metrics{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:12px;
 }
 
-.chart-box h3 {
-    margin-top: 0;
+.small-metric{
+    background:#f7f8fa;
+    border-radius:7px;
+    padding:10px;
 }
 
-/* BAR CHART */
-
-.bar-chart {
-    height: 270px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    gap: 15px;
-    padding: 20px 10px 35px;
-    border-bottom: 1px solid #d1d5db;
+.small-label{
+    color:#6b7280;
+    font-size:9px;
 }
 
-.bar-item {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 1;
+.small-value{
+    font-size:14px;
+    font-weight:700;
+    margin-top:4px;
 }
 
-.bar {
-    width: 55px;
-    background: #2563eb;
-    border-radius: 6px 6px 0 0;
+.chart{
+    height:260px;
+    display:flex;
+    align-items:flex-end;
+    gap:12px;
+    padding:20px 5px 25px;
+    border-bottom:1px solid #e5e7eb;
 }
 
-.bar-value {
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 5px;
+.bar-container{
+    flex:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
 }
 
-.bar-label {
-    font-size: 12px;
-    margin-top: 8px;
-    text-align: center;
+.bar-value{
+    font-size:8px;
+    color:#374151;
+    margin-bottom:4px;
+    white-space:nowrap;
 }
 
-/* LINE-LIKE AGENT CHART */
-
-.agent-table {
-    width: 100%;
-    border-collapse: collapse;
+.bar{
+    width:70%;
+    max-width:48px;
+    min-height:3px;
+    background:#3b82f6;
+    border-radius:4px 4px 0 0;
 }
 
-.agent-table th,
-.agent-table td {
-    padding: 7px;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 12px;
+.bar-label{
+    font-size:9px;
+    color:#6b7280;
+    margin-top:5px;
 }
 
-.agent-table th {
-    background: #f3f4f6;
+.drivers{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
 }
 
-/* INVESTMENT */
-
-.investment-chart {
-    padding: 20px;
+.driver{
+    border:1px solid #e5e7eb;
+    border-radius:8px;
+    padding:13px;
 }
 
-.investment-row {
-    margin-bottom: 22px;
+.driver-label{
+    color:#6b7280;
+    font-size:10px;
 }
 
-.investment-label {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 7px;
-    font-weight: bold;
+.driver-value{
+    font-size:14px;
+    font-weight:700;
+    margin-top:7px;
 }
 
-.track {
-    height: 28px;
-    background: #e5e7eb;
-    border-radius: 6px;
-    overflow: hidden;
+.driver-note{
+    color:#6b7280;
+    font-size:9px;
+    line-height:1.4;
+    margin-top:5px;
 }
 
-.fill-positive {
-    height: 100%;
-    background: #2563eb;
+.decision{
+    font-size:13px;
+    line-height:1.7;
 }
 
-.fill-negative {
-    height: 100%;
-    background: #dc2626;
+.decision strong{
+    font-size:15px;
 }
 
-.recommendation {
-    background: white;
-    padding: 28px;
-    margin-top: 30px;
-    border-radius: 12px;
-    border-left: 6px solid #2563eb;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+.footer{
+    color:#9ca3af;
+    text-align:right;
+    font-size:8px;
+    margin-top:8px;
 }
 
-.recommendation h2 {
-    margin-top: 0;
+@media(max-width:850px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .drivers{grid-template-columns:repeat(2,1fr)}
 }
 
-.warning {
-    font-weight: bold;
-}
-
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background: white;
-}
-
-th,
-td {
-    padding: 14px;
-    border-bottom: 1px solid #e5e7eb;
-    text-align: left;
-}
-
-th {
-    background: #e5e7eb;
-}
-
-.positive {
-    font-weight: bold;
-}
-
-.negative {
-    font-weight: bold;
-}
-
-footer {
-    text-align: center;
-    padding: 30px;
-    color: #6b7280;
-}
-
-@media(max-width: 900px) {
-
-    .cards {
-        grid-template-columns: 1fr 1fr;
+@media(max-width:600px){
+    .kpis,
+    .drivers,
+    .small-metrics{
+        grid-template-columns:1fr;
     }
 
-    .charts {
-        grid-template-columns: 1fr;
+    .container{
+        padding:15px;
     }
-
 }
-
-@media(max-width: 600px) {
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-}
-
 </style>
 </head>
 
-
 <body>
-
-<header>
-
-<h1>CredResolve Collections Recovery Analytics</h1>
-
-<p>
-Recovery performance, collection drivers and ₹10 Cr investment analysis
-</p>
-
-</header>
-
 
 <div class="container">
 
+<h1>CredResolve Recovery</h1>
+<div class="subtitle">
+    Collections recovery performance
+</div>
 
-<!-- PORTFOLIO -->
 
-<h2>Portfolio Overview</h2>
+<!-- ======================================================
+     CORE KPIs
+====================================================== -->
 
-<div class="cards">
+<div class="kpis">
+
+    <div class="card">
+        <div class="kpi-label">Recovery Amount</div>
+        <div class="kpi-value" id="recoveryAmount">—</div>
+        <div class="kpi-note">Backend recovery</div>
+    </div>
+
+    <div class="card">
+        <div class="kpi-label">Recovery Rate</div>
+        <div class="kpi-value" id="recoveryRate">—</div>
+        <div class="kpi-note">Recovered / portfolio</div>
+    </div>
+
+    <div class="card">
+        <div class="kpi-label">Recovered Accounts</div>
+        <div class="kpi-value" id="recoveredAccounts">—</div>
+        <div class="kpi-note">Backend account count</div>
+    </div>
+
+    <div class="card">
+        <div class="kpi-label">Recovery / Recovered Account</div>
+        <div class="kpi-value" id="recoveryPer">—</div>
+        <div class="kpi-note">Recovery ÷ recovered accounts</div>
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     11% CLAIM
+====================================================== -->
 
 <div class="card">
-<div class="label">Total Accounts</div>
-<div class="value">30,000</div>
+
+    <div class="title">11% Claim</div>
+
+    <div class="verdict" id="claim">
+        Loading backend analysis...
+    </div>
+
+    <div class="small-metrics">
+
+        <div class="small-metric">
+            <div class="small-label">
+                March Recovery Change
+            </div>
+            <div class="small-value" id="marchRecovery">
+                —
+            </div>
+        </div>
+
+        <div class="small-metric">
+            <div class="small-label">
+                March Recovered Accounts Change
+            </div>
+            <div class="small-value" id="marchAccounts">
+                —
+            </div>
+        </div>
+
+        <div class="small-metric">
+            <div class="small-label">
+                Following Complete Month
+            </div>
+            <div class="small-value" id="followingMonth">
+                —
+            </div>
+        </div>
+
+    </div>
+
 </div>
+
+
+<!-- ======================================================
+     ONE CHART ONLY
+====================================================== -->
 
 <div class="card">
-<div class="label">Recovered Accounts</div>
-<div class="value">13,284</div>
+
+    <div class="title">
+        Monthly Recovery Trend
+    </div>
+
+    <div class="chart" id="chart">
+        Loading backend data...
+    </div>
+
+    <div class="driver-note">
+        * Partial month
+    </div>
+
 </div>
+
+
+<!-- ======================================================
+     KEY DRIVERS
+====================================================== -->
 
 <div class="card">
-<div class="label">Recovery Rate</div>
-<div class="value">44.28%</div>
+
+    <div class="title">
+        Key Drivers
+    </div>
+
+    <div class="drivers">
+
+        <div class="driver">
+
+            <div class="driver-label">
+                Loan Type
+            </div>
+
+            <div class="driver-value" id="loanDriver">
+                —
+            </div>
+
+        </div>
+
+
+        <div class="driver">
+
+            <div class="driver-label">
+                Risk
+            </div>
+
+            <div class="driver-value" id="riskDriver">
+                —
+            </div>
+
+        </div>
+
+
+        <div class="driver">
+
+            <div class="driver-label">
+                Call Exposure
+            </div>
+
+            <div class="driver-value" id="callDriver">
+                —
+            </div>
+
+        </div>
+
+
+        <div class="driver">
+
+            <div class="driver-label">
+                DPD
+            </div>
+
+            <div class="driver-value" id="dpdDriver">
+                —
+            </div>
+
+            <div class="driver-note">
+                Weak standalone signal
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="driver-note">
+        Observed associations; not causal effects.
+    </div>
+
 </div>
+
+
+<!-- ======================================================
+     DECISION
+====================================================== -->
 
 <div class="card">
-<div class="label">Recovery Amount</div>
-<div class="value">₹1.879B</div>
+
+    <div class="title">
+        Decision
+    </div>
+
+    <div class="decision">
+
+        <strong>
+            Do not treat the 11% claim as a sustained trend.
+        </strong>
+
+        <br>
+
+        Run a controlled pilot before full investment.
+
+    </div>
+
+</div>
+
+
+<div class="footer">
+    Backend-generated from CredResolve analytical data
 </div>
 
 </div>
 
 
-<!-- RECOVERY -->
+<!-- ======================================================
+     BACKEND DATA
+     
+     THIS MUST REMAIN EMPTY.
+     
+     build_dashboard.py replaces it.
+====================================================== -->
 
-<h2>Recovery Analysis</h2>
+<script>
+window.BACKEND_DATA = {"source":{"generated_from_backend":true,"database":"credresolve.duckdb","recovery_reconciled":true},"portfolio":{"accounts":30000,"recovered_accounts":13284,"recovery_rate_pct":44.28,"recovery_amount":1315583964.64,"recovery_per_recovered_account":99035.23},"loan_type":[{"loan_type":"CONSUMER","accounts":5930,"recovery_rate_pct":45.28},{"loan_type":"AUTO","accounts":6079,"recovery_rate_pct":44.42},{"loan_type":"CREDIT_CARD","accounts":6080,"recovery_rate_pct":44.24},{"loan_type":"PERSONAL","accounts":5983,"recovery_rate_pct":43.94},{"loan_type":"BNPL","accounts":5928,"recovery_rate_pct":43.52}],"risk_segment":[{"risk_segment":"LOW","accounts":7513,"recovery_rate_pct":45.0},{"risk_segment":"MEDIUM","accounts":7533,"recovery_rate_pct":44.27},{"risk_segment":"NPA","accounts":7402,"recovery_rate_pct":44.15},{"risk_segment":"HIGH","accounts":7552,"recovery_rate_pct":43.7}],"monthly_recovery":[{"recovery_month":"2026-01-01T00:00:00.000","recovery_amount":187229127.59,"recovery_amount_mom_pct":null,"is_partial":false},{"recovery_month":"2026-02-01T00:00:00.000","recovery_amount":170142453.76,"recovery_amount_mom_pct":-9.13,"is_partial":false},{"recovery_month":"2026-03-01T00:00:00.000","recovery_amount":188912374.02,"recovery_amount_mom_pct":11.03,"is_partial":false},{"recovery_month":"2026-04-01T00:00:00.000","recovery_amount":175138043.41,"recovery_amount_mom_pct":-7.29,"is_partial":false},{"recovery_month":"2026-05-01T00:00:00.000","recovery_amount":184250278.5,"recovery_amount_mom_pct":5.2,"is_partial":false},{"recovery_month":"2026-06-01T00:00:00.000","recovery_amount":175559726.97,"recovery_amount_mom_pct":-4.72,"is_partial":false},{"recovery_month":"2026-07-01T00:00:00.000","recovery_amount":187242265.08,"recovery_amount_mom_pct":6.65,"is_partial":false},{"recovery_month":"2026-08-01T00:00:00.000","recovery_amount":47109695.31,"recovery_amount_mom_pct":-74.84,"is_partial":true}],"monthly_recovered_accounts":[{"recovery_month":"2026-01-01T00:00:00.000","recovered_accounts":2374,"recovered_accounts_mom_pct":null},{"recovery_month":"2026-02-01T00:00:00.000","recovered_accounts":2173,"recovered_accounts_mom_pct":-8.47},{"recovery_month":"2026-03-01T00:00:00.000","recovered_accounts":2419,"recovered_accounts_mom_pct":11.32},{"recovery_month":"2026-04-01T00:00:00.000","recovered_accounts":2304,"recovered_accounts_mom_pct":-4.75},{"recovery_month":"2026-05-01T00:00:00.000","recovered_accounts":2344,"recovered_accounts_mom_pct":1.74},{"recovery_month":"2026-06-01T00:00:00.000","recovered_accounts":2286,"recovered_accounts_mom_pct":-2.47},{"recovery_month":"2026-07-01T00:00:00.000","recovered_accounts":2335,"recovered_accounts_mom_pct":2.14},{"recovery_month":"2026-08-01T00:00:00.000","recovered_accounts":608,"recovered_accounts_mom_pct":-73.96}],"call_exposure":[{"exposure_band":"0 calls","accounts":5702,"recovered_accounts":4798.0,"recovery_rate_pct":84.15},{"exposure_band":"1–2 calls","accounts":12040,"recovered_accounts":5854.0,"recovery_rate_pct":48.62},{"exposure_band":"3–4 calls","accounts":8726,"recovered_accounts":2153.0,"recovery_rate_pct":24.67},{"exposure_band":"5+ calls","accounts":3532,"recovered_accounts":479.0,"recovery_rate_pct":13.56}],"dpd":[{"dpd":0,"accounts":2685,"recovery_rate_pct":45.44},{"dpd":1,"accounts":2713,"recovery_rate_pct":42.79},{"dpd":5,"accounts":2727,"recovery_rate_pct":44.81},{"dpd":15,"accounts":2736,"recovery_rate_pct":43.06},{"dpd":30,"accounts":2704,"recovery_rate_pct":42.83},{"dpd":45,"accounts":2744,"recovery_rate_pct":45.81},{"dpd":60,"accounts":2770,"recovery_rate_pct":45.74},{"dpd":75,"accounts":2741,"recovery_rate_pct":44.33},{"dpd":90,"accounts":2727,"recovery_rate_pct":44.77},{"dpd":120,"accounts":2759,"recovery_rate_pct":44.4},{"dpd":180,"accounts":2694,"recovery_rate_pct":43.06}],"investment_10cr_break_even":[{"investment_amount":100000000,"portfolio_outstanding":10489035343.0,"break_even_uplift_pp":0.9533765187,"telephony_modeled_effect_pp":1.0762490116,"telephony_margin_vs_break_even_pp":0.1228724929,"telephony_incremental_recovery_value":112888139.20810395,"telephony_incremental_recovered_accounts":322.8747034877,"investment_cost_source":"₹10 Cr assignment scenario — not observed source data","incremental_effect_source":"Stage 7 counterfactual/model estimate","causal_effect_established":false}]};
+</script>
 
-<div class="charts">
 
+<script>
 
-<!-- RISK -->
+(function(){
 
-<div class="chart-box">
+"use strict";
 
-<h3>Recovery Rate by Risk Segment</h3>
+const D = window.BACKEND_DATA || {};
 
-<div class="bar-chart">
+const P = D.portfolio || {};
 
-<div class="bar-item">
+function valid(v){
+    return v !== null &&
+           v !== undefined &&
+           Number.isFinite(Number(v));
+}
 
-<div class="bar-value">45.00%</div>
+function money(v){
 
-<div
-class="bar"
-style="height:180px">
-</div>
+    if(!valid(v)) return "—";
 
-<div class="bar-label">LOW</div>
+    return "₹" +
+        Number(v).toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+}
 
-</div>
+function crore(v){
 
+    if(!valid(v)) return "—";
 
-<div class="bar-item">
+    return "₹" +
+        (
+            Number(v) / 10000000
+        ).toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        )
+        + " Cr";
+}
 
-<div class="bar-value">44.27%</div>
+function pct(v){
 
-<div
-class="bar"
-style="height:177px">
-</div>
+    if(!valid(v)) return "—";
 
-<div class="bar-label">MEDIUM</div>
+    return Number(v).toFixed(2) + "%";
+}
 
-</div>
+function text(v){
 
+    if(v === null || v === undefined)
+        return "—";
 
-<div class="bar-item">
+    return String(v);
+}
 
-<div class="bar-value">44.15%</div>
 
-<div
-class="bar"
-style="height:176px">
-</div>
+/* ======================================================
+   CORE KPIs
+====================================================== */
 
-<div class="bar-label">NPA</div>
+document.getElementById("recoveryAmount")
+    .textContent =
+    crore(P.recovery_amount);
 
-</div>
+document.getElementById("recoveryRate")
+    .textContent =
+    pct(P.recovery_rate_pct);
 
+document.getElementById("recoveredAccounts")
+    .textContent =
+    valid(P.recovered_accounts)
+        ? Number(P.recovered_accounts)
+            .toLocaleString("en-IN")
+        : "—";
 
-<div class="bar-item">
+document.getElementById("recoveryPer")
+    .textContent =
+    money(
+        P.recovery_per_recovered_account
+    );
 
-<div class="bar-value">43.70%</div>
 
-<div
-class="bar"
-style="height:175px">
-</div>
+/* ======================================================
+   MONTHLY BACKEND CHART
+====================================================== */
 
-<div class="bar-label">HIGH</div>
+const monthly =
+    Array.isArray(D.monthly_recovery)
+        ? D.monthly_recovery
+        : [];
 
-</div>
 
-</div>
+if(monthly.length === 0){
 
-</div>
+    document.getElementById("chart")
+        .textContent =
+        "No monthly backend data available.";
 
+}else{
 
-<!-- CALL -->
+    const amounts =
+        monthly
+        .map(x => Number(x.recovery_amount))
+        .filter(Number.isFinite);
 
-<div class="chart-box">
+    const max =
+        Math.max(...amounts,1);
 
-<h3>Recovery Rate by Call Exposure</h3>
 
-<div class="bar-chart">
+    document.getElementById("chart")
+        .innerHTML =
 
-<div class="bar-item">
+        monthly.map(x => {
 
-<div class="bar-value">43.89%</div>
+            const amount =
+                Number(x.recovery_amount);
 
-<div
-class="bar"
-style="height:175px">
-</div>
+            const height =
+                Math.max(
+                    4,
+                    amount / max * 185
+                );
 
-<div class="bar-label">0–2 calls</div>
+            const month =
+                new Date(
+                    x.recovery_month
+                ).toLocaleString(
+                    "en-US",
+                    {month:"short"}
+                );
 
-</div>
+            return `
 
+                <div class="bar-container">
 
-<div class="bar-item">
+                    <div class="bar-value">
+                        ${crore(amount)}
+                    </div>
 
-<div class="bar-value">44.37%</div>
+                    <div
+                        class="bar"
+                        style="height:${height}px">
+                    </div>
 
-<div
-class="bar"
-style="height:177px">
-</div>
+                    <div class="bar-label">
+                        ${month}${x.is_partial ? "*" : ""}
+                    </div>
 
-<div class="bar-label">3–4 calls</div>
+                </div>
 
-</div>
+            `;
 
+        }).join("");
+}
 
-<div class="bar-item">
 
-<div class="bar-value">44.97%</div>
+/* ======================================================
+   11% ANALYSIS
+====================================================== */
 
-<div
-class="bar"
-style="height:180px">
-</div>
+const complete =
+    monthly.filter(
+        x => x.is_partial !== true
+    );
 
-<div class="bar-label">5+ calls</div>
 
-</div>
+const march =
+    complete.find(
+        x =>
+            String(
+                x.recovery_month
+            ).slice(0,7) === "2026-03"
+    );
 
-</div>
 
-</div>
+const april =
+    complete.find(
+        x =>
+            String(
+                x.recovery_month
+            ).slice(0,7) === "2026-04"
+    );
 
 
-<!-- AGENTS -->
+if(march){
 
-<div class="chart-box">
+    document.getElementById("marchRecovery")
+        .textContent =
+        pct(
+            march.recovery_amount_mom_pct
+        );
+}
 
-<h3>Recovery Rate by Agent Count</h3>
 
-<table class="agent-table">
+if(april){
 
-<tr>
-<th>Agents</th>
-<th>Accounts</th>
-<th>Recovery Rate</th>
-</tr>
+    document.getElementById("followingMonth")
+        .textContent =
+        pct(
+            april.recovery_amount_mom_pct
+        );
+}
 
-<tr><td>0</td><td>1,695</td><td>42.95%</td></tr>
-<tr><td>1</td><td>4,572</td><td>44.03%</td></tr>
-<tr><td>2</td><td>6,799</td><td>43.76%</td></tr>
-<tr><td>3</td><td>6,758</td><td>44.50%</td></tr>
-<tr><td>4</td><td>4,945</td><td>44.53%</td></tr>
-<tr><td>5</td><td>2,881</td><td>44.12%</td></tr>
-<tr><td>6</td><td>1,419</td><td>45.60%</td></tr>
-<tr><td>7</td><td>612</td><td>46.41%</td></tr>
 
-</table>
+/* Recovered-account March change */
 
-</div>
+const accountMonths =
+    Array.isArray(
+        D.monthly_recovered_accounts
+    )
+    ?
+    D.monthly_recovered_accounts
+    :
+    [];
 
 
-<!-- TARGETING -->
+const marchAccounts =
+    accountMonths.find(
+        x =>
+            String(
+                x.recovery_month
+            ).slice(0,7) === "2026-03"
+    );
 
-<div class="chart-box">
 
-<h3>Targeting Performance</h3>
+if(marchAccounts){
 
-<div class="bar-chart">
+    document.getElementById(
+        "marchAccounts"
+    ).textContent =
+    pct(
+        marchAccounts
+        .recovered_accounts_mom_pct
+    );
+}
 
-<div class="bar-item">
 
-<div class="bar-value">45.01%</div>
+if(march && april){
 
-<div
-class="bar"
-style="height:180px">
-</div>
+    document.getElementById("claim")
+        .innerHTML = `
 
-<div class="bar-label">
-Not Targeted
-</div>
+            <strong>NOT SUSTAINED</strong>
 
-</div>
+            <br><br>
 
+            March recorded
+            <strong>
+                ${pct(
+                    march.recovery_amount_mom_pct
+                )}
+            </strong>
+            recovery growth.
 
-<div class="bar-item">
+            The following complete month changed by
+            <strong>
+                ${pct(
+                    april.recovery_amount_mom_pct
+                )}
+            </strong>.
 
-<div class="bar-value">44.07%</div>
+            <br><br>
 
-<div
-class="bar"
-style="height:176px">
-</div>
+            The evidence does not support a sustained
+            11% improvement across the portfolio.
 
-<div class="bar-label">
-Targeted
-</div>
+        `;
+}
 
-</div>
 
-</div>
+/* ======================================================
+   LOAN TYPE
+====================================================== */
 
-</div>
+const loans =
+    Array.isArray(D.loan_type)
+        ? D.loan_type
+        : [];
 
 
-</div>
+if(loans.length >= 2){
 
+    const sorted =
+        [...loans].sort(
+            (a,b) =>
+                Number(b.recovery_rate_pct) -
+                Number(a.recovery_rate_pct)
+        );
 
-<!-- INVESTMENT -->
+    const high = sorted[0];
+    const low = sorted[sorted.length - 1];
 
-<h2>₹10 Cr Investment Analysis</h2>
+    document.getElementById("loanDriver")
+        .textContent =
+        `${text(high.loan_type)}
+         ${pct(high.recovery_rate_pct)}
+         vs
+         ${text(low.loan_type)}
+         ${pct(low.recovery_rate_pct)}`;
+}
 
-<div class="cards">
 
-<div class="card">
-<div class="label">Investment</div>
-<div class="value">₹10 Cr</div>
-</div>
+/* ======================================================
+   RISK
+====================================================== */
 
-<div class="card">
-<div class="label">Break-even Uplift</div>
-<div class="value">0.953 pp</div>
-</div>
+const risks =
+    Array.isArray(D.risk_segment)
+        ? D.risk_segment
+        : [];
 
-<div class="card">
-<div class="label">Telephony Effect</div>
-<div class="value">+0.961 pp</div>
-</div>
 
-<div class="card">
-<div class="label">Margin vs Break-even</div>
-<div class="value">+0.008 pp</div>
-</div>
+if(risks.length >= 2){
 
-</div>
+    const sorted =
+        [...risks].sort(
+            (a,b) =>
+                Number(b.recovery_rate_pct) -
+                Number(a.recovery_rate_pct)
+        );
 
+    const high = sorted[0];
+    const low = sorted[sorted.length - 1];
 
-<!-- INVESTMENT COMPARISON -->
+    document.getElementById("riskDriver")
+        .textContent =
+        `${text(high.risk_segment)}
+         ${pct(high.recovery_rate_pct)}
+         vs
+         ${text(low.risk_segment)}
+         ${pct(low.recovery_rate_pct)}`;
+}
 
-<div class="chart-box" style="margin-top:25px">
 
-<h3>Investment Option Comparison</h3>
+/* ======================================================
+   CALL EXPOSURE
+====================================================== */
 
-<div class="investment-chart">
+const calls =
+    Array.isArray(D.call_exposure)
+        ? D.call_exposure
+        : [];
 
 
-<div class="investment-row">
+if(calls.length >= 2){
 
-<div class="investment-label">
+    const rates =
+        calls
+        .map(x => Number(x.recovery_rate_pct))
+        .filter(Number.isFinite);
 
-<span>Telephony</span>
+    if(rates.length >= 2){
 
-<span>+0.961 pp</span>
+        const minimum =
+            Math.min(...rates);
 
-</div>
+        const maximum =
+            Math.max(...rates);
 
-<div class="track">
+        document.getElementById("callDriver")
+            .textContent =
+            `${pct(minimum)}–${pct(maximum)}`;
+    }
+}
 
-<div
-class="fill-positive"
-style="width:96%">
-</div>
 
-</div>
+/* ======================================================
+   DPD
+====================================================== */
 
-</div>
+const dpd =
+    Array.isArray(D.dpd)
+        ? D.dpd
+        : [];
 
 
-<div class="investment-row">
+if(dpd.length){
 
-<div class="investment-label">
+    const rates =
+        dpd
+        .map(x => Number(x.recovery_rate_pct))
+        .filter(Number.isFinite);
 
-<span>Agents</span>
+    if(rates.length){
 
-<span>+0.361 pp</span>
+        const minimum =
+            Math.min(...rates);
 
-</div>
+        const maximum =
+            Math.max(...rates);
 
-<div class="track">
+        document.getElementById("dpdDriver")
+            .textContent =
+            `${pct(minimum)}–${pct(maximum)}`;
+    }
+}
 
-<div
-class="fill-positive"
-style="width:36%">
-</div>
+})();
 
-</div>
-
-</div>
-
-
-<div class="investment-row">
-
-<div class="investment-label">
-
-<span>Targeting</span>
-
-<span>-0.947 pp</span>
-
-</div>
-
-<div class="track">
-
-<div
-class="fill-negative"
-style="width:95%">
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- RECOMMENDATION -->
-
-<div class="recommendation">
-
-<h2>Investment Recommendation</h2>
-
-<p>
-
-<strong>
-Better telephony infrastructure
-</strong>
-
-is the leading directly measurable candidate for a controlled pilot.
-
-</p>
-
-<p>
-
-Model-based recovery improvement from 2 → 5 calls:
-
-<strong>
-+0.961489 percentage points
-</strong>
-
-</p>
-
-<p>
-
-₹10 Cr break-even requirement:
-
-<strong>
-+0.953377 percentage points
-</strong>
-
-</p>
-
-<p>
-
-Margin above break-even:
-
-<strong>
-+0.008112 percentage points
-</strong>
-
-</p>
-
-<p>
-
-Adjusted telephony model p-value:
-
-<strong>
-0.051541
-</strong>
-
-</p>
-
-<p class="warning">
-
-Decision:
-
-Run a controlled pilot before committing the full ₹10 Cr.
-
-</p>
-
-</div>
-
-
-<!-- EVIDENCE -->
-
-<h2>Investment Evidence</h2>
-
-<table>
-
-<tr>
-
-<th>Investment Option</th>
-
-<th>Direct Evidence</th>
-
-<th>Model Effect</th>
-
-<th>Assessment</th>
-
-</tr>
-
-
-<tr>
-
-<td>
-Better telephony infrastructure
-</td>
-
-<td>Yes</td>
-
-<td class="positive">
-+0.961 pp
-</td>
-
-<td>
-Pilot candidate
-</td>
-
-</tr>
-
-
-<tr>
-
-<td>
-More collection agents
-</td>
-
-<td>Yes</td>
-
-<td>
-+0.361 pp
-</td>
-
-<td>
-Below break-even
-</td>
-
-</tr>
-
-
-<tr>
-
-<td>
-AI voice automation
-</td>
-
-<td>No</td>
-
-<td>
-Not estimable
-</td>
-
-<td>
-Insufficient data
-</td>
-
-</tr>
-
-
-<tr>
-
-<td>
-Better borrower targeting
-</td>
-
-<td>Yes</td>
-
-<td class="negative">
--0.947 pp
-</td>
-
-<td>
-Not supported
-</td>
-
-</tr>
-
-
-<tr>
-
-<td>
-WhatsApp / digital engagement
-</td>
-
-<td>No</td>
-
-<td>
-Not estimable
-</td>
-
-<td>
-Insufficient data
-</td>
-
-</tr>
-
-
-<tr>
-
-<td>
-Field operations
-</td>
-
-<td>No</td>
-
-<td>
-Not estimable
-</td>
-
-<td>
-Insufficient data
-</td>
-
-</tr>
-
-</table>
-
-
-</div>
-
-
-<footer>
-
-CredResolve Collections Recovery Analytics
-
-</footer>
-
+</script>
 
 </body>
 </html>

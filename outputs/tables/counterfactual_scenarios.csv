@@ -1,4 +1,4 @@
-scenario,description,eligible_accounts,baseline_eligible_recovery_rate,assumed_absolute_recovery_lift,counterfactual_recovery_rate,estimated_incremental_recovered_accounts,estimated_incremental_recovery_amount,estimated_total_recovery_amount,causal_claim
-A,1 percentage-point recovery improvement among currently unrecovered accounts,16716,0.0,0.01,0.01,167.16,24125937.25103839,1941384554.4010384,False
-B,1 percentage-point recovery improvement among currently unrecovered accounts with <=2 calls,7090,0.0,0.01,0.01,70.9,10232884.368859908,1927491501.51886,False
-C,2 percentage-point recovery improvement among currently unrecovered accounts,16716,0.0,0.02,0.02,334.32,48251874.50207678,1965510491.652077,False
+scenario,description,driver,eligible_accounts,baseline_recovery_rate,estimated_recovery_rate,model_effect_pp,estimated_incremental_recovered_accounts,estimated_incremental_recovery_amount,causal_claim
+A,Conservative,Telephony,30000,0.4428,0.45356249011625666,1.0762490116256629,322.87470348769887,112888139.20810395,False
+B,Targeted Opportunity,Collection Agents,30000,0.4428,0.4492454119404603,0.6445411940460277,193.3623582138083,67606153.64368206,False
+C,Upside,Borrower Targeting,30000,0.4428,0.4428,0.0,0.0,0.0,False

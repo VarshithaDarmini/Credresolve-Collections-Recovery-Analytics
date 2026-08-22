@@ -1,8 +1,6 @@
 assumption,value,interpretation
-Scenario A lift,1 percentage point,"Planning assumption, not causal estimate"
-Scenario B lift,1 percentage point,"Planning assumption, not causal estimate"
-Scenario C lift,2 percentage points,"Planning assumption, not causal estimate"
-Sensitivity range,0.5 to 3 percentage points,Tests business-case sensitivity
-Recovery value,Historical average recovery per recovered account,Used only for scenario sizing
-Causal interpretation,Not claimed,Scenarios represent planning estimates
-Raw source data,Not modified,Data governance requirement
+Recovery definition,SUCCESS payments only,Authoritative recovery definition
+Payment deduplication,One record per payment_id,Prevents duplicate payment inflation
+Scenario effects,Observed exposure associations,Not causal estimates
+Targeting effect,0 pp,No defensible causal targeting effect established
+Investment decision,Requires controlled validation,Counterfactual outputs should not be treated as guaranteed recovery

@@ -6,16 +6,24 @@
 -- Calculate assignment-required collection metrics using the
 -- cleaned source tables.
 --
--- Metrics:
--- 1. Contact rate
--- 2. RPC rate
--- 3. PTP rate
--- 4. PTP kept rate
--- 5. Recovery per agent-hour
--- 6. Cost per ₹ recovered
--- 7. Channel conversion
+-- Required metrics:
+-- 1. Contact Rate
+-- 2. RPC Rate
+-- 3. PTP Rate
+-- 4. PTP Kept Rate
+-- 5. Recovery Rate
+-- 6. Recovery per Account
+-- 7. Recovery per Agent-Hour
+-- 8. Cost per ₹ Recovered
+-- 9. Channel Conversion
 --
 -- Definitions are based only on fields available in the data.
+--
+-- IMPORTANT:
+-- Cost per ₹ recovered is NOT estimated because the supplied
+-- data contains no reliable collection/intervention cost field.
+--
+-- Raw source data is NOT modified.
 -- ============================================================
 
 
@@ -159,9 +167,7 @@ agent_hours AS (
     FROM agent_sessions
 
     WHERE login_at IS NOT NULL
-
       AND logout_at IS NOT NULL
-
       AND logout_at >= login_at
 ),
 
@@ -194,6 +200,8 @@ SELECT
 
     c.ptp_calls,
 
+
+    -- Contact Rate
     ROUND(
         100.0
         * c.contacted_calls
@@ -201,6 +209,8 @@ SELECT
         2
     ) AS contact_rate_pct,
 
+
+    -- RPC Rate
     ROUND(
         100.0
         * c.rpc_calls
@@ -208,6 +218,8 @@ SELECT
         2
     ) AS rpc_rate_pct,
 
+
+    -- PTP Rate
     ROUND(
         100.0
         * c.ptp_calls
@@ -226,6 +238,8 @@ SELECT
 
     p.broken_ptps,
 
+
+    -- PTP Kept Rate
     ROUND(
         100.0
         * p.kept_ptps
@@ -235,14 +249,42 @@ SELECT
 
 
     -- ========================================================
-    -- AGENT PRODUCTIVITY
+    -- RECOVERY METRICS
     -- ========================================================
-
-    a.total_agent_hours,
 
     r.recovered_accounts,
 
     r.recovery_amount,
+
+
+    -- Recovery Rate
+    ROUND(
+        100.0
+        * r.recovered_accounts
+        / NULLIF(
+            (
+                SELECT COUNT(*)
+                FROM account_features
+            ),
+            0
+        ),
+        2
+    ) AS recovery_rate_pct,
+
+
+    -- Recovery per Account
+    ROUND(
+        r.recovery_amount
+        / NULLIF(r.recovered_accounts, 0),
+        2
+    ) AS recovery_per_account,
+
+
+    -- ========================================================
+    -- AGENT PRODUCTIVITY
+    -- ========================================================
+
+    a.total_agent_hours,
 
     ROUND(
         r.recovery_amount
@@ -254,11 +296,15 @@ SELECT
     -- ========================================================
     -- COST METRIC
     -- ========================================================
+    --
+    -- No reliable cost field exists in the supplied data.
+    -- Therefore this metric is intentionally NULL.
+    -- ========================================================
 
     CAST(NULL AS DOUBLE)
         AS cost_per_rupee_recovered,
 
-    'NOT ESTIMABLE: vendor_telephony contains no cost field'
+    'NOT ESTIMABLE FROM SUPPLIED DATA: no reliable collection/intervention cost field is available'
         AS cost_metric_note
 
 
@@ -276,7 +322,6 @@ CROSS JOIN recovery r;
 -- 2. CHANNEL CONVERSION
 -- ============================================================
 --
--- IMPORTANT:
 -- Channel conversion is calculated at UNIQUE MESSAGE level.
 --
 -- SMS:
@@ -287,8 +332,8 @@ CROSS JOIN recovery r;
 --     unique delivered messages
 --     → unique delivered messages with PAYMENT_CLICK
 --
--- This prevents multiple event rows for the same message
--- from producing conversion rates above 100%.
+-- This prevents multiple event rows for the same message from
+-- producing conversion rates above 100%.
 -- ============================================================
 
 
@@ -498,6 +543,11 @@ FROM whatsapp_summary;
 
 CREATE OR REPLACE TABLE required_metric_definitions AS
 
+
+-- ------------------------------------------------------------
+-- Contact Rate
+-- ------------------------------------------------------------
+
 SELECT
 
     'contact_rate' AS metric_name,
@@ -511,6 +561,10 @@ SELECT
 UNION ALL
 
 
+-- ------------------------------------------------------------
+-- RPC Rate
+-- ------------------------------------------------------------
+
 SELECT
 
     'rpc_rate',
@@ -522,6 +576,10 @@ SELECT
 
 UNION ALL
 
+
+-- ------------------------------------------------------------
+-- PTP Rate
+-- ------------------------------------------------------------
 
 SELECT
 
@@ -535,6 +593,10 @@ SELECT
 UNION ALL
 
 
+-- ------------------------------------------------------------
+-- PTP Kept Rate
+-- ------------------------------------------------------------
+
 SELECT
 
     'ptp_kept_rate',
@@ -547,11 +609,47 @@ SELECT
 UNION ALL
 
 
+-- ------------------------------------------------------------
+-- Recovery Rate
+-- ------------------------------------------------------------
+
+SELECT
+
+    'recovery_rate',
+
+    'recovered accounts / total accounts',
+
+    'Share of portfolio accounts with at least one SUCCESS payment.'
+
+
+UNION ALL
+
+
+-- ------------------------------------------------------------
+-- Recovery per Account
+-- ------------------------------------------------------------
+
+SELECT
+
+    'recovery_per_account',
+
+    'SUCCESS recovery amount / recovered accounts',
+
+    'Average SUCCESS-based recovery amount per recovered account.'
+
+
+UNION ALL
+
+
+-- ------------------------------------------------------------
+-- Recovery per Agent-Hour
+-- ------------------------------------------------------------
+
 SELECT
 
     'recovery_per_agent_hour',
 
-    'recovery amount / agent hours',
+    'SUCCESS recovery amount / agent hours',
 
     'Recovery amount generated per recorded agent session hour.'
 
@@ -559,17 +657,25 @@ SELECT
 UNION ALL
 
 
+-- ------------------------------------------------------------
+-- Cost per ₹ Recovered
+-- ------------------------------------------------------------
+
 SELECT
 
     'cost_per_rupee_recovered',
 
-    'cost / recovery amount',
+    'collection/intervention cost / SUCCESS recovery amount',
 
-    'Not estimable because the available vendor_telephony table contains no cost field.'
+    'Not estimable from supplied data because no reliable collection or intervention cost field is available.'
 
 
 UNION ALL
 
+
+-- ------------------------------------------------------------
+-- Channel Conversion
+-- ------------------------------------------------------------
 
 SELECT
 

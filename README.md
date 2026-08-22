@@ -1,105 +1,94 @@
 # CredResolve Collections Recovery Analytics
 
-End-to-end data analytics project for collections recovery performance,
-data quality, recovery drivers, statistical analysis, counterfactual
-analysis, and ₹10 Cr investment decision support.
+An end-to-end data analytics project built to independently investigate whether the reported **“11% month-on-month recovery improvement”** is actually supported by the underlying collections data.
 
-## Project Objective
+The project reconstructs a trustworthy analytical dataset from multiple operational sources, investigates recovery drivers and data-quality issues, evaluates the reported business claim, and assesses where a **₹10 Cr investment** should be deployed.
 
-Analyze collections recovery performance, identify measurable recovery
-drivers, build a trustworthy Golden Dataset, and evaluate investment
-options using statistical and economic evidence.
+## What I Built
 
-## Analytical Workflow
-
-Raw Data
-→ Staging
-→ Clean
-→ Golden Dataset
-→ Features
-→ Metrics
-→ Dashboard
-
-## Key Analysis
-
-- Data profiling and quality assessment
-- Data forensics and entity resolution
-- Golden Dataset construction
-- Recovery performance analysis
-- Recovery driver analysis
-- Statistical analysis
-- Counterfactual analysis
+- Golden Dataset and reproducible data pipeline
+- Data cleaning, deduplication and entity-resolution logic
+- Recovery performance and driver analysis
+- Data-forensics and quality investigation
+- Statistical and counterfactual analysis
 - ₹10 Cr investment analysis
-- Executive dashboard
+- Executive decision dashboard
+- Production analytics architecture
+- Validation and analytical documentation
 
-## Investment Decision
+## Key Findings
 
-The analysis identifies **Better Telephony Infrastructure** as the
-leading directly measurable candidate for a controlled pilot.
+| Metric | Result |
+|---|---:|
+| Total Verified Recovery | **₹131.56 Cr** |
+| Recovery Rate | **44.28%** |
+| Recovered Accounts | **13,284** |
+| Recovery / Recovered Account | **₹99,035.23** |
+| March Recovery Change | **+11.03%** |
+| March Recovered Accounts Change | **+11.32%** |
+| Following Complete Month | **−7.29%** |
 
-Model-based recovery improvement from 2 → 5 calls:
+### 11% Claim
 
-**+0.961489 percentage points**
+**NOT SUSTAINED**
 
-Calculated ₹10 Cr break-even requirement:
+March shows approximately 11% recovery growth, but the following complete month declined by 7.29%. The evidence therefore does not support treating the reported 11% improvement as a sustained portfolio-wide trend.
 
-**+0.953377 percentage points**
+## Recovery Drivers
 
-Margin above break-even:
+- **Loan Type:** CONSUMER **45.28%** vs BNPL **43.52%**
+- **Risk:** LOW **45.00%** vs HIGH **43.70%**
+- **Call Exposure:** **43.22%–44.97%**
+- **DPD:** **42.79%–45.81%**, indicating weak standalone signal
 
-**+0.008112 percentage points**
+These findings are treated as observed associations rather than automatic causal effects.
 
-Adjusted telephony model p-value:
+## ₹10 Cr Investment Decision
 
-**0.051541**
+**Better Telephony Infrastructure — PILOT FIRST**
 
-Because the estimated margin is very small and the analysis is
-observational, the recommendation is to run a controlled pilot before
-committing the full ₹10 Cr investment.
+- Modeled improvement from 2 → 5 calls: **+0.961489 pp**
+- Break-even requirement: **+0.953377 pp**
+- Margin above break-even: **+0.008112 pp**
+- Adjusted model p-value: **0.051541**
 
-## Repository Structure
+The modeled benefit is only marginally above break-even and is based on observational evidence.
 
-- `data/` — raw and Golden datasets
-- `notebooks/` — end-to-end analytical workflow
-- `sql/` — staging, cleaning, transformation, feature and metric SQL
-- `outputs/` — generated analytical outputs
-- `reports/` — data-quality, assumptions, findings and executive reports
-- `dashboard/` — executive HTML dashboard
-- `architecture/` — production architecture and architecture diagram
-- `tests/` — validation tests
+**Recommendation:** Run a controlled pilot before committing the full ₹10 Cr.
 
-## Architecture
+## Executive Dashboard
 
-See:
+The dashboard is intentionally designed as a **single-screen CEO view**, focused on:
 
-`architecture/architecture_diagram.png`
-
-and
-
-`architecture/architecture_decisions.md`
-
-## Dashboard
+**Current performance → 11% claim → recovery trend → key drivers → decision**
 
 Open:
 
 `dashboard/index.html`
 
-The dashboard presents portfolio recovery performance, recovery drivers,
-and the ₹10 Cr investment analysis.
+Dashboard values are generated from the analytical backend rather than manually 
+
+## Analytical Pipeline
+
+1. **Raw Data**
+2. **Staging**
+3. **Clean**
+4. **Golden Dataset**
+5. **Features**
+6. **Metrics**
+7. **Analysis**
+8. **Dashboard**
 
 ## Technology
 
-- Python
-- Pandas
-- DuckDB
-- SQL
-- Jupyter Notebook
-- HTML/CSS/JavaScript
-- Statistical modelling
+Python · Pandas · DuckDB · SQL · Jupyter · HTML/CSS/JavaScript · Statistical Analysis
 
-## Important Analytical Limitation
+## Important Limitation
 
-The investment analysis is observational and should not be interpreted
-as proof of causal effects. Options without direct intervention outcome
-and cost information are treated as not directly estimable rather than
-being assigned unsupported ROI estimates.
+The investment analysis is observational. Modeled uplift is not treated as guaranteed causal impact or guaranteed ROI. Where evidence is insufficient, the recommended next step is controlled experimentation rather than unsupported conclusions.
+
+## Final Decision
+
+**The reported 11% improvement is not sustained.**
+
+**Do not treat it as a sustained portfolio-wide improvement. Run a controlled telephony pilot before committing the full ₹10 Cr investment.**

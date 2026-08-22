@@ -1,4 +1,4 @@
-business_case,scenario,description,eligible_accounts,incremental_recovered_accounts,incremental_recovery_value,causal_claim
-Conservative,A,1 percentage-point recovery improvement among currently unrecovered accounts,16716,167.16,24125937.25103839,False
-Targeted Opportunity,B,1 percentage-point recovery improvement among currently unrecovered accounts with <=2 calls,7090,70.9,10232884.368859908,False
-Upside,C,2 percentage-point recovery improvement among currently unrecovered accounts,16716,334.32,48251874.50207678,False
+business_case,scenario,description,driver,eligible_accounts,incremental_recovered_accounts,incremental_recovery_value,causal_claim
+Conservative,A,Conservative,Telephony,30000,322.87470348769887,112888139.20810395,False
+Targeted Opportunity,B,Targeted Opportunity,Collection Agents,30000,193.3623582138083,67606153.64368206,False
+Upside,C,Upside,Borrower Targeting,30000,0.0,0.0,False

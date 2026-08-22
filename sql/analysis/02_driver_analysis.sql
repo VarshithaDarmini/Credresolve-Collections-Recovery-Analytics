@@ -572,3 +572,205 @@ FROM account_features
 GROUP BY status
 
 ORDER BY recovery_rate_pct DESC;
+
+
+-- ============================================================
+-- 10. RECOVERY BY CALL DIRECTION / CHANNEL
+-- ============================================================
+-- Direction is the available call-level channel indicator.
+-- INBOUND and OUTBOUND are compared descriptively.
+-- This does NOT establish that one direction causes better recovery.
+-- ============================================================
+
+SELECT
+
+    c.direction AS call_direction,
+
+    COUNT(DISTINCT c.account_id)
+        AS accounts,
+
+    COUNT(
+        DISTINCT CASE
+            WHEN a.recovered_account = 1
+                THEN c.account_id
+        END
+    ) AS recovered_accounts,
+
+    COUNT(DISTINCT c.account_id)
+    -
+    COUNT(
+        DISTINCT CASE
+            WHEN a.recovered_account = 1
+                THEN c.account_id
+        END
+    ) AS unrecovered_accounts,
+
+    ROUND(
+        100.0
+        *
+        COUNT(
+            DISTINCT CASE
+                WHEN a.recovered_account = 1
+                    THEN c.account_id
+            END
+        )
+        /
+        NULLIF(
+            COUNT(DISTINCT c.account_id),
+            0
+        ),
+        2
+    ) AS recovery_rate_pct,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN a.recovered_account = 1
+                    THEN a.total_payment_amount
+                ELSE 0
+            END
+        ),
+        2
+    ) AS recovery_amount,
+
+    CASE
+        WHEN COUNT(DISTINCT c.account_id) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
+
+FROM clean_calls c
+
+LEFT JOIN account_features a
+    ON c.account_id = a.account_id
+
+GROUP BY
+    c.direction
+
+ORDER BY
+    recovery_rate_pct DESC;
+
+
+-- ============================================================
+-- 11. RECOVERY BY CALLING TIME
+-- ============================================================
+-- Calling time is derived from call event_at.
+-- Four broad time bands are used to avoid over-interpreting
+-- individual hourly fluctuations.
+--
+-- This is descriptive only and does NOT establish that
+-- calling at a particular time causes better recovery.
+-- ============================================================
+
+WITH calling_time_groups AS (
+
+    SELECT
+
+        CASE
+            WHEN EXTRACT(HOUR FROM c.event_at)
+                 BETWEEN 0 AND 5
+                THEN '00-05'
+
+            WHEN EXTRACT(HOUR FROM c.event_at)
+                 BETWEEN 6 AND 11
+                THEN '06-11'
+
+            WHEN EXTRACT(HOUR FROM c.event_at)
+                 BETWEEN 12 AND 17
+                THEN '12-17'
+
+            ELSE '18-23'
+        END AS calling_time_band,
+
+        CASE
+            WHEN EXTRACT(HOUR FROM c.event_at)
+                 BETWEEN 0 AND 5
+                THEN 1
+
+            WHEN EXTRACT(HOUR FROM c.event_at)
+                 BETWEEN 6 AND 11
+                THEN 2
+
+            WHEN EXTRACT(HOUR FROM c.event_at)
+                 BETWEEN 12 AND 17
+                THEN 3
+
+            ELSE 4
+        END AS band_order,
+
+        c.account_id,
+
+        a.recovered_account,
+        a.total_payment_amount
+
+    FROM clean_calls c
+
+    LEFT JOIN account_features a
+        ON c.account_id = a.account_id
+)
+
+SELECT
+
+    calling_time_band,
+
+    COUNT(DISTINCT account_id)
+        AS accounts,
+
+    COUNT(
+        DISTINCT CASE
+            WHEN recovered_account = 1
+                THEN account_id
+        END
+    ) AS recovered_accounts,
+
+    COUNT(DISTINCT account_id)
+    -
+    COUNT(
+        DISTINCT CASE
+            WHEN recovered_account = 1
+                THEN account_id
+        END
+    ) AS unrecovered_accounts,
+
+    ROUND(
+        100.0
+        *
+        COUNT(
+            DISTINCT CASE
+                WHEN recovered_account = 1
+                    THEN account_id
+            END
+        )
+        /
+        NULLIF(
+            COUNT(DISTINCT account_id),
+            0
+        ),
+        2
+    ) AS recovery_rate_pct,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN recovered_account = 1
+                    THEN total_payment_amount
+                ELSE 0
+            END
+        ),
+        2
+    ) AS recovery_amount,
+
+    CASE
+        WHEN COUNT(DISTINCT account_id) < 100
+            THEN 'LOW_SAMPLE'
+        ELSE 'ADEQUATE_SAMPLE'
+    END AS sample_flag
+
+FROM calling_time_groups
+
+GROUP BY
+    calling_time_band,
+    band_order
+
+ORDER BY
+    band_order;

@@ -1,4 +1,4 @@
-scenario,investment_amount,assumed_uplift_pp,incremental_recovery,net_value_after_investment,roi_pct,meets_break_even,scenario_type
-Downside,100000000,0.0,0.0,-100000000.0,-100.0,False,ASSUMPTION / SENSITIVITY — NOT OBSERVED FACT
-Base,100000000,0.0,0.0,-100000000.0,-100.0,False,ASSUMPTION / SENSITIVITY — NOT OBSERVED FACT
-Upside,100000000,0.0,0.0,-100000000.0,-100.0,False,ASSUMPTION / SENSITIVITY — NOT OBSERVED FACT
+scenario,investment_amount,assumed_uplift_pp,incremental_recovery,net_value_after_investment,roi_pct,meets_break_even,scenario_type,causal_claim
+Downside,100000000,0.5381245058128314,56444069.60405198,-43555930.39594802,-43.555930395948025,False,Sensitivity assumption — not observed fact,False
+Base,100000000,1.0762490116256629,112888139.20810395,12888139.208103955,12.888139208103954,True,Sensitivity assumption — not observed fact,False
+Upside,100000000,1.3453112645320786,141110174.01012996,41110174.01012996,41.11017401012996,True,Sensitivity assumption — not observed fact,False

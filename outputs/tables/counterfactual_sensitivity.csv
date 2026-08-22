@@ -1,6 +1,16 @@
-assumed_absolute_recovery_lift,eligible_unrecovered_accounts,estimated_incremental_recovered_accounts,estimated_incremental_recovery_amount,estimated_total_recovery_amount,causal_claim
-0.005,16716,83.58,12062968.625519196,1929321585.7755194,False
-0.01,16716,167.16,24125937.25103839,1941384554.4010384,False
-0.015,16716,250.73999999999998,36188905.87655759,1953447523.0265577,False
-0.02,16716,334.32,48251874.50207678,1965510491.652077,False
-0.03,16716,501.47999999999996,72377811.75311518,1989636428.9031153,False
+scenario,description,uplift_multiplier,base_incremental_recovery_amount,sensitivity_incremental_recovery_amount,causal_claim
+A,Conservative,0.5,112888139.20810395,56444069.60405198,False
+A,Conservative,0.75,112888139.20810395,84666104.40607797,False
+A,Conservative,1.0,112888139.20810395,112888139.20810395,False
+A,Conservative,1.25,112888139.20810395,141110174.01012993,False
+A,Conservative,1.5,112888139.20810395,169332208.81215593,False
+B,Targeted Opportunity,0.5,67606153.64368206,33803076.82184103,False
+B,Targeted Opportunity,0.75,67606153.64368206,50704615.23276155,False
+B,Targeted Opportunity,1.0,67606153.64368206,67606153.64368206,False
+B,Targeted Opportunity,1.25,67606153.64368206,84507692.05460258,False
+B,Targeted Opportunity,1.5,67606153.64368206,101409230.4655231,False
+C,Upside,0.5,0.0,0.0,False
+C,Upside,0.75,0.0,0.0,False
+C,Upside,1.0,0.0,0.0,False
+C,Upside,1.25,0.0,0.0,False
+C,Upside,1.5,0.0,0.0,False

@@ -1,2 +1,2 @@
-baseline_accounts,baseline_recovered_accounts,baseline_recovery_rate,baseline_recovery_amount,largest_scenario,largest_scenario_incremental_recovery_amount,counterfactual_is_causal_claim
-30000,13284,0.4428,1917258617.15,C,48251874.50207678,False
+accounts,recovered_accounts,baseline_recovery_rate,baseline_recovery_amount,baseline_outstanding_amount,telephony_model_effect_pp,agent_model_effect_pp,targeting_model_effect_pp,causal_claim,raw_source_modified
+30000,13284,0.4428,1315583964.6399999,10489035343.0,1.0762490116256629,0.6445411940460277,0.0,False,False

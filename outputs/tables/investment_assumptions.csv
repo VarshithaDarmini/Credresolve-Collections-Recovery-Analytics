@@ -1,9 +1,8 @@
 assumption,value,interpretation
-Investment amount,₹10 Cr assignment scenario,Scenario input; not an observed source-data cost
-Incremental recovery,Stage 7 counterfactual/model estimate,"Modeled estimate, not guaranteed outcome"
-Downside scenario,50% of modeled telephony effect,"Sensitivity assumption, not observed performance"
-Base scenario,100% of modeled telephony effect,Sensitivity assumption based on current model
-Upside scenario,125% of modeled telephony effect,"Sensitivity assumption, not observed performance"
-Implementation cost,Not supplied in source data,No operational cost has been invented
-ROI,Scenario sensitivity only,Not realized ROI
-Causal effect,Not established,Requires controlled validation
+Recovery definition,SUCCESS payments only,Payment IDs deduplicated before aggregation
+Investment,₹10 Cr,"Assignment scenario, not observed cost"
+Telephony effect,1.076249 pp,"Stage 7 modeled estimate, not causal proof"
+Break-even,0.953377 pp,₹10 Cr divided by portfolio outstanding
+Implementation cost,Not available from supplied data,No actual cost invented
+ROI,Sensitivity analysis only,Not realized ROI
+Causal effect,Not established,Controlled pilot required
