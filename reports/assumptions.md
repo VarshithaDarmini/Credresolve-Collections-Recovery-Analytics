@@ -354,20 +354,24 @@ They do not establish that SMS or WhatsApp causes higher recovery.
 
 ---
 
-## 19. Missing Business Dimensions
+## 19. Missing and Unresolved Business Dimensions
 
-The available analytical schema was checked for several requested driver dimensions.
+The available analytical schema was checked for several requested driver dimensions. Two different problems were found, and they are treated differently.
 
-The following fields were not identified as reliable standalone analytical dimensions in the supplied account-level data:
+### 19.1 Client and Language — not present in the schema
 
-- Client
-- Geography
-- Language
-- Agent tenure
+Neither `client` nor `language` exists as a field in any raw or golden source table. These dimensions are not fabricated or inferred. If required for production analysis, corresponding source fields would need to be supplied.
 
-These dimensions are therefore not fabricated or inferred.
+### 19.2 Geography and Agent Tenure — present, but excluded due to unresolved entity identity
 
-If required for production analysis, corresponding source fields would need to be supplied.
+`borrowers.city` / `borrowers.state` and `agents.joined_at` do exist in the schema. They were excluded from driver analysis, not because the fields are absent, but because `borrower_id` and `agent_id` do not behave as stable entity keys in the supplied data:
+
+- **73.3% of `borrower_id` values** (8,070 of 11,015) have **conflicting `state`** values across their rows — the same borrower ID appears with different names and different states, with no reliable ordering field to pick a single authoritative row.
+- **100% of `agent_id` values** (1,000 of 1,000) map to multiple, materially different name/team/`joined_at` combinations — on average ~30 rows per `agent_id`, spanning join dates up to 18 months apart for the same ID.
+
+Assigning an arbitrary row (first, last, most recent `updated_at`) to compute geography or tenure would silently fabricate a value for the majority of accounts rather than report a genuine finding. These dimensions are therefore excluded until the source `borrower_id` / `agent_id` keys are resolved to a single canonical identity per person — see `data_quality_report.md` Section 7 for the full detection methodology and worked examples.
+
+This is treated as a data-quality finding in its own right (Part 2E of the assignment — "does the same agent appear under multiple identifiers?" — in fact the inverse and more severe form: the same identifier maps to multiple agents).
 
 ---
 
